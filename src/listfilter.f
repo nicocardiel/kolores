@@ -12,6 +12,7 @@ C
         CHARACTER*255 READC
 C
         INTEGER I,K,L1,L2
+        INTEGER LD1,LD2
         INTEGER NPFILT !no. of points which define a given filter
         INTEGER IDUM
         INTEGER ISYSTEM
@@ -20,6 +21,8 @@ C
         CHARACTER*1 CTYPE
         CHARACTER*80 FILTERNAME
 C------------------------------------------------------------------------------
+        LD1=TRUEBEG(PHOTODIR)
+        LD2=TRUELEN(PHOTODIR)
         IF(WLMIN.GT.WLMAX) RETURN
 C elegimos tipos de filtro a mostrar
         CTYPE(1:1)=
@@ -30,16 +33,24 @@ C filtros "normales"
         IF((CTYPE.EQ.'1').OR.(CTYPE.EQ.'2').OR.(CTYPE.EQ.'4').
      +    OR.(CTYPE.EQ.'5'))THEN
           IF(CTYPE.EQ.'1')THEN
-            OPEN(10,FILE=FILTERFILE1,STATUS='OLD',FORM='FORMATTED')
+            OPEN(10,FILE=
+     +       PHOTODIR(LD1:LD2)//'/'//
+     +       FILTERFILE1,STATUS='OLD',FORM='FORMATTED')
             K=0
           ELSEIF(CTYPE.EQ.'2')THEN
-            OPEN(10,FILE=FILTERFILE2,STATUS='OLD',FORM='FORMATTED')
+            OPEN(10,FILE=
+     +       PHOTODIR(LD1:LD2)//'/'//
+     +       FILTERFILE2,STATUS='OLD',FORM='FORMATTED')
             K=900
           ELSEIF(CTYPE.EQ.'4')THEN
-            OPEN(10,FILE=FILTERFILE3,STATUS='OLD',FORM='FORMATTED')
+            OPEN(10,FILE=
+     +       PHOTODIR(LD1:LD2)//'/'//
+     +       FILTERFILE3,STATUS='OLD',FORM='FORMATTED')
             K=100
           ELSEIF(CTYPE.EQ.'5')THEN
-            OPEN(10,FILE=FILTERFILE4,STATUS='OLD',FORM='FORMATTED')
+            OPEN(10,FILE=
+     +       PHOTODIR(LD1:LD2)//'/'//
+     +       FILTERFILE4,STATUS='OLD',FORM='FORMATTED')
             K=500
           END IF
 10        READ(10,'(4X,I5,A)',END=20) NPFILT,FILTERNAME
@@ -94,23 +105,23 @@ C filtros HST
           L2=TRUELEN(PHOTODIR)
           IF(ICHIP.EQ.0)THEN
             ISYSTEM=SYSTEMFUNCTION('ls '//PHOTODIR(L1:L2)//
-     +       '/HST_res/wfpc2*.txt | nl -v 1101')
+     +       '/res/HST_res/wfpc2*.txt | nl -v 1101')
 ccc     +       '/HST_res/wfpc2*.txt | nl -v 1101 .photometry_HST_dir')
           ELSEIF(ICHIP.EQ.1)THEN
             ISYSTEM=SYSTEMFUNCTION('ls '//PHOTODIR(L1:L2)//
-     +       '/HST_res/pcf*.txt | nl -v 1201')
+     +       '/res/HST_res/pcf*.txt | nl -v 1201')
 ccc     +       '/HST_res/pcf*.txt | nl -v 1201 .photometry_HST_dir')
           ELSEIF(ICHIP.EQ.2)THEN
             ISYSTEM=SYSTEMFUNCTION('ls '//PHOTODIR(L1:L2)//
-     +       '/HST_res/wf2f*.txt | nl -v 1301')
+     +       '/res/HST_res/wf2f*.txt | nl -v 1301')
 ccc     +       '/HST_res/wf2f*.txt | nl -v 1301 .photometry_HST_dir')
           ELSEIF(ICHIP.EQ.3)THEN
             ISYSTEM=SYSTEMFUNCTION('ls '//PHOTODIR(L1:L2)//
-     +       '/HST_res/wf3f*.txt | nl -v 1401')
+     +       '/res/HST_res/wf3f*.txt | nl -v 1401')
 ccc     +       '/HST_res/wf3f*.txt | nl -v 1401 .photometry_HST_dir')
           ELSE
             ISYSTEM=SYSTEMFUNCTION('ls '//PHOTODIR(L1:L2)//
-     +       '/HST_res/wf4f*.txt | nl -v 1501')
+     +       '/res/HST_res/wf4f*.txt | nl -v 1501')
 ccc     +       '/HST_res/wf4f*.txt | nl -v 1501 .photometry_HST_dir')
           END IF
         END IF

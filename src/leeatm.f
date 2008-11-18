@@ -8,9 +8,20 @@ C
         INTEGER NPATM !no. of data points
         REAL WL_ATM(NPMAX),FLUX_ATM(NPMAX)
 C
+        INTEGER TRUEBEG
+        INTEGER TRUELEN
+C
+        INTEGER L1,L2,LL1,LL2
         INTEGER I
 C------------------------------------------------------------------------------
-        OPEN(10,FILE=ATMFILE,STATUS='OLD',FORM='FORMATTED')
+        L1=TRUEBEG(PHOTODIR)
+        L2=TRUELEN(PHOTODIR)
+        LL1=TRUEBEG(ATMFILE)
+        LL2=TRUELEN(ATMFILE)
+        WRITE(*,101) 'Reading file: '
+        WRITE(*,101) PHOTODIR(L1:L2)//'/atmosphere/'//ATMFILE(LL1:LL2)
+        OPEN(10,FILE=PHOTODIR(L1:L2)//'/atmosphere/'//ATMFILE(LL1:LL2),
+     +   STATUS='OLD',FORM='FORMATTED')
 C
         I=1
 10      READ(10,*,END=20) WL_ATM(I),FLUX_ATM(I)
@@ -26,6 +37,7 @@ C
 C
         WRITE(*,100) '> No. of points it atmosphere transmission file: '
         WRITE(*,*) NPATM
+        WRITE(*,*)
 C
 100     FORMAT(A,$)
 101     FORMAT(A)
