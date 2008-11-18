@@ -1,0 +1,13 @@
+/u/cardiel/starburst99/data/     # Starburst99 data directory
+/u/cardiel/PEGASE/PEGASE.2/data/ # PEGASE directory
+3                                # Total number of filters to be fitted 
+VEGA                             # Photometric system: VEGA, AB, or ST only!
+0.8305                           # Redshift of the object
+2                                # Identification number of filter no. 1
+22.000 0.100                     # Magnitude and error
+6                                # Identification number of filter no. 2
+23.000 0.050                     # Magnitude and error
+7                                # Identification number of filter no. 3
+22.000 0.300                     # Magnitude and error
+50                               # Minimum age to use (Myr) INTEGER
+900                              # Maximum age to use (Myr) INTEGER
