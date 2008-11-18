@@ -1,0 +1,141 @@
+#!/bin/csh
+#------------------------------------------------------------------------------
+# Version 01-February-2001
+#------------------------------------------------------------------------------
+# To install photometry properly, you must follow these steps:
+# make include
+# make
+# make clean
+#------------------------------------------------------------------------------
+# define here maximum image dimensions
+NXMAX = 4800
+NYMAX = 1100
+#------------------------------------------------------------------------------
+# define maximum no. of points in filters
+NPMAX = 20000
+NSIMULMAX = 500
+NFILTROS = 6
+ATMFILE = atmosphere.dat
+#------------------------------------------------------------------------------
+# Filter transmission curves
+FILTERFILE1 = fukugita_res/fukugita_res
+FILTERFILE2 = nirspec_res/nirspec_res
+FILTERFILE3 = bruzual_res/filters_res
+FILTERFILE4 = other_res/other_res
+#------------------------------------------------------------------------------
+# Vega spectra:
+#
+# CALSPEC for HST (STScI)
+VEGAFILE1 = vega_sed/alpha_lyr_005.sed
+# Castelli & Kurucz 1994
+VEGAFILE2 = vega_sed/vega_ck94.sed
+# Hayes 1985
+VEGAFILE3 = vega_sed/vega_hayes85.sed
+# Koo
+VEGAFILE4 = vega_sed/vega_from_koo.sed
+#------------------------------------------------------------------------------
+# verify that the required libraries are properly set
+#PGPDIR  = /usr/local/pgplot
+PGPDIR  = /usr/local/pgplot
+#FIODIR  = /usr/local/cfitsio2036
+FIODIR  = /usr/local/cfitsio
+#X11DIR  = /usr/openwin/lib
+#X11DIR  = /usr/X11R6/lib
+X11DIR  = /usr/lib64
+#------------------------------------------------------------------------------
+# Set the appropiate compilers
+#FCOMPIL = f77 -g -ftrap=common,underflow
+FCOMPIL = gfortran -g -O3 -Wall
+#------------------------------------------------------------------------------
+#               Nothing SHOULD be modified below this comment line
+#------------------------------------------------------------------------------
+# macro definitions
+FSOURCE = button.f buttqbr.f buttqcf.f buttqch.f buttqex.f \
+          buttqit.f buttqpr.f buttqxb.f buttqyb.f buttqytext.f buttsbr.f \
+          buttscf.f buttsch.f buttsex.f buttsit.f buttspr.f buttsxb.f \
+          buttsyb.f buttsytext.f ifbutton.f rpgband.f rpgbegin.f rpgbegok.f \
+          rpgenv.f rpgeras.f rpgerasb.f rpgerasw.f \
+          avoidrep.f \
+          expand.f \
+          iofunctions.f \
+          findmml.f \
+          filterpar.f \
+          fit_sed.f \
+          fmean0.f \
+          guessef.f \
+          leeatm.f \
+          leefilter.f \
+          leevega.f \
+          listfilter.f \
+          ordena1f.f \
+          photometry.f \
+          plotatm.f \
+          plotfilter.f \
+          plotspectrum.f \
+          plotspectrum2.f \
+          plotvega.f \
+          ranred.f \
+          rvrebin.f \
+          scompext.f \
+          sescrfits.f \
+          sleeascii.f \
+          sleefits.f \
+          systemfunction.f
+FOBJECT = $(FSOURCE:.f=.o)
+# Default rule to create program
+photometry:  $(FOBJECT) $(COBJECT)
+	$(FCOMPIL) -o $@ $(FOBJECT) $(COBJECT) -L$(PGPDIR) -L$(FIODIR) -L$(X11DIR) -lpgplot -lcfitsio -lX11
+# Target to clean object modules
+clean:    $(FOBJECT) $(COBJECT)
+	\rm $(FOBJECT) $(COBJECT)
+	\rm photometry.inc
+# Target to touch source modules
+touch:
+	touch $(FSOURCE) $(CSOURCE)
+# Target to create the file photometry.inc
+include:
+	echo "         INTEGER NXMAX" > photometry.inc
+	echo "         PARAMETER (NXMAX=$(NXMAX))" >> photometry.inc
+	echo "         INTEGER NYMAX" >> photometry.inc
+	echo "         PARAMETER (NYMAX=$(NYMAX))" >> photometry.inc
+	echo "         INTEGER NPMAX" >> photometry.inc
+	echo "         PARAMETER (NPMAX=$(NPMAX))" >> photometry.inc
+	echo "         INTEGER NSIMULMAX" >> photometry.inc
+	echo "         PARAMETER (NSIMULMAX=$(NSIMULMAX))" >> photometry.inc
+	echo "         INTEGER NFILTROS" >> photometry.inc
+	echo "         PARAMETER (NFILTROS=$(NFILTROS))" >> photometry.inc
+	echo "         CHARACTER*80 ATMFILE" >> photometry.inc
+	echo "         PARAMETER (ATMFILE=" >> photometry.inc
+	echo "     +    '"`pwd`"/$(ATMFILE)')" >> photometry.inc
+	echo "         CHARACTER*80 FILTERFILE1" >> photometry.inc
+	echo "         PARAMETER (FILTERFILE1=" >> photometry.inc
+	echo "     +    '"`pwd`"/$(FILTERFILE1)')" >> photometry.inc
+	echo "         CHARACTER*80 FILTERFILE2" >> photometry.inc
+	echo "         PARAMETER (FILTERFILE2=" >> photometry.inc
+	echo "     +    '"`pwd`"/$(FILTERFILE2)')" >> photometry.inc
+	echo "         CHARACTER*80 FILTERFILE3" >> photometry.inc
+	echo "         PARAMETER (FILTERFILE3=" >> photometry.inc
+	echo "     +    '"`pwd`"/$(FILTERFILE3)')" >> photometry.inc
+	echo "         CHARACTER*80 FILTERFILE4" >> photometry.inc
+	echo "         PARAMETER (FILTERFILE4=" >> photometry.inc
+	echo "     +    '"`pwd`"/$(FILTERFILE4)')" >> photometry.inc
+	echo "         CHARACTER*80 VEGAFILE1" >> photometry.inc
+	echo "         PARAMETER (VEGAFILE1=" >> photometry.inc
+	echo "     +    '"`pwd`"/$(VEGAFILE1)')" >> photometry.inc
+	echo "         CHARACTER*80 VEGAFILE2" >> photometry.inc
+	echo "         PARAMETER (VEGAFILE2=" >> photometry.inc
+	echo "     +    '"`pwd`"/$(VEGAFILE2)')" >> photometry.inc
+	echo "         CHARACTER*80 VEGAFILE3" >> photometry.inc
+	echo "         PARAMETER (VEGAFILE3=" >> photometry.inc
+	echo "     +    '"`pwd`"/$(VEGAFILE3)')" >> photometry.inc
+	echo "         CHARACTER*80 VEGAFILE4" >> photometry.inc
+	echo "         PARAMETER (VEGAFILE4=" >> photometry.inc
+	echo "     +    '"`pwd`"/$(VEGAFILE4)')" >> photometry.inc
+	echo "         CHARACTER*80 PHOTODIR" >> photometry.inc
+	echo "         PARAMETER (PHOTODIR='"`pwd`"')" >> photometry.inc
+	touch $(FSOURCE) $(CSOURCE)
+# second level dependencies
+.f.o: $(FSOURCE)
+	$(FCOMPIL) -c $?
+# definitions
+.PRECIOUS: photometry

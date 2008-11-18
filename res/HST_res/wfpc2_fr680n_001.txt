@@ -1,0 +1,9 @@
+#  Table crwfpc2comp$wfpc2_fr680n_001.tab  Thu 11:00:21 20-Jul-95
+
+# WAVELENGTH   THROUGHPUT        ERROR
+#  ANGSTROMS TRANSMISSION TRANSMISSION
+
+       100.0           0.           0.
+       101.0           1.           0.
+     12999.0           1.           0.
+     13000.0           0.           0.
