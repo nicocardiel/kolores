@@ -1,11 +1,8 @@
-C  Version January 26, 2001
-C
-C g77 -o photometry *.o -L$PGPLOT_DIR -L$FITSIO_DIR -L/usr/X11/lib \
-C -lpgplot -lcfitsio -lX11
-        PROGRAM PHOTOMETRY
+        PROGRAM KOLORES
         IMPLICIT NONE
 C
         INCLUDE 'photometry.inc'
+        INCLUDE 'version.inc'
 C
         INTEGER NBUTTX,NBUTTY,NBUTT_TOTAL
         PARAMETER (NBUTTX=6,NBUTTY=4,NBUTT_TOTAL=NBUTTX*NBUTTY)
@@ -121,6 +118,13 @@ C
         COMMON/BLKATM2/WL_ATM,FLUX_ATM
         COMMON/BLKGRAPHIC/NTERM,IDN
         COMMON/BLKSNRAT/SNRAT,SNRATMIN,SNRATMAX
+C------------------------------------------------------------------------------
+C welcome message
+        WRITE(*,101) '************************************************'
+        WRITE(*,101) '       Welcome to kolores '//
+     +   '(version '//VERSION//')'
+        WRITE(*,101) '************************************************'
+        WRITE(*,*)
 C------------------------------------------------------------------------------
 C inicializamos variables
         DATA (NCOLOR(NF),NF=1,NFILTROS) /4,3,2,5,7,6/

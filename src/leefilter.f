@@ -17,24 +17,35 @@ C
         INTEGER SYSTEMFUNCTION
 C
         INTEGER I,K,L1,L2
+        INTEGER LD1,LD2
         INTEGER IDUM
         INTEGER ISYSTEM
         REAL FMAX
         CHARACTER*4 CDUMMY
 C------------------------------------------------------------------------------
+        LD1=TRUEBEG(PHOTODIR)
+        LD2=TRUELEN(PHOTODIR)
 C filtros "normales"
         IF(NFILTER.LE.1000)THEN
           IF(NFILTER.LE.100)THEN
-            OPEN(10,FILE=FILTERFILE1,STATUS='OLD',FORM='FORMATTED')
+            OPEN(10,FILE=
+     +       PHOTODIR(LD1:LD2)//'/'//
+     +       FILTERFILE1,STATUS='OLD',FORM='FORMATTED')
             K=0
           ELSEIF(NFILTER.LE.500)THEN
-            OPEN(10,FILE=FILTERFILE3,STATUS='OLD',FORM='FORMATTED')
+            OPEN(10,FILE=
+     +       PHOTODIR(LD1:LD2)//'/'//
+     +       FILTERFILE3,STATUS='OLD',FORM='FORMATTED')
             K=100
           ELSEIF(NFILTER.LE.900)THEN
-            OPEN(10,FILE=FILTERFILE4,STATUS='OLD',FORM='FORMATTED')
+            OPEN(10,FILE=
+     +       PHOTODIR(LD1:LD2)//'/'//
+     +       FILTERFILE4,STATUS='OLD',FORM='FORMATTED')
             K=500
           ELSE
-            OPEN(10,FILE=FILTERFILE2,STATUS='OLD',FORM='FORMATTED')
+            OPEN(10,FILE=
+     +       PHOTODIR(LD1:LD2)//'/'//
+     +       FILTERFILE2,STATUS='OLD',FORM='FORMATTED')
             K=900
           END IF
 10        READ(10,'(4X,I5,A)',END=12) NPFILT,FILTERNAME
@@ -85,27 +96,27 @@ C filtros HST
           ISYSTEM=SYSTEMFUNCTION('\rm -f .photometry_HST_filter')
           IF(NFILTER.LT.1200)THEN
             ISYSTEM=SYSTEMFUNCTION('ls '//PHOTODIR(L1:L2)//
-     +       '/HST_res/wfpc2*.txt | nl -v 1101 '//
+     +       '/res/HST_res/wfpc2*.txt | nl -v 1101 '//
      +       '| grep '//CDUMMY//' | column -t | colrm 1 6 '//
      +       '> .photometry_HST_filter')
           ELSEIF(NFILTER.LT.1300)THEN
             ISYSTEM=SYSTEMFUNCTION('ls '//PHOTODIR(L1:L2)//
-     +       '/HST_res/pcf*.txt | nl -v 1201 '//
+     +       '/res/HST_res/pcf*.txt | nl -v 1201 '//
      +       '| grep '//CDUMMY//' | column -t | colrm 1 6 '//
      +       '> .photometry_HST_filter')
           ELSEIF(NFILTER.LT.1400)THEN
             ISYSTEM=SYSTEMFUNCTION('ls '//PHOTODIR(L1:L2)//
-     +       '/HST_res/wf2f*.txt |nl -v 1301 '//
+     +       '/res/HST_res/wf2f*.txt |nl -v 1301 '//
      +       '| grep '//CDUMMY//' | column -t | colrm 1 6 '//
      +       '> .photometry_HST_filter')
           ELSEIF(NFILTER.LT.1500)THEN
             ISYSTEM=SYSTEMFUNCTION('ls '//PHOTODIR(L1:L2)//
-     +       '/HST_res/wf3f*.txt | nl -v 1401 '//
+     +       '/res/HST_res/wf3f*.txt | nl -v 1401 '//
      +       '| grep '//CDUMMY//' | column -t | colrm 1 6 '//
      +       '> .photometry_HST_filter')
           ELSE
             ISYSTEM=SYSTEMFUNCTION('ls '//PHOTODIR(L1:L2)//
-     +       '/HST_res/wf4f*.txt | nl -v 1501 '//
+     +       '/res/HST_res/wf4f*.txt | nl -v 1501 '//
      +       '| grep '//CDUMMY//' | column -t | colrm 1 6 '//
      +       '> .photometry_HST_filter')
           END IF

@@ -9,11 +9,13 @@ C
         REAL WL_VEGA(NPMAX),FLUX_VEGA(NPMAX),EFLUX_VEGA(NPMAX)
         CHARACTER*20 CLABVEGA
 C
+        INTEGER TRUEBEG
         INTEGER TRUELEN
         REAL LININTERP
         CHARACTER*255 READC
 C
         INTEGER I
+        INTEGER L1,L2
         INTEGER IFLAG,N1,N2
         REAL F0
         CHARACTER*1 COPC
@@ -47,17 +49,27 @@ C
           CLABVEGA='ST\d\gl\u'
         ELSE
           CLABVEGA='\ga Lyr'
+          L1=TRUEBEG(PHOTODIR)
+          L2=TRUELEN(PHOTODIR)
           IF(COPC.EQ.'1')THEN
-            OPEN(10,FILE=VEGAFILE1,STATUS='OLD',FORM='FORMATTED')
+            OPEN(10,FILE=
+     +       PHOTODIR(L1:L2)//'/'//
+     +       VEGAFILE1,STATUS='OLD',FORM='FORMATTED')
             VEGAFILE=VEGAFILE1
           ELSEIF(COPC.EQ.'2')THEN
-            OPEN(10,FILE=VEGAFILE2,STATUS='OLD',FORM='FORMATTED')
+            OPEN(10,FILE=
+     +       PHOTODIR(L1:L2)//'/'//
+     +       VEGAFILE2,STATUS='OLD',FORM='FORMATTED')
             VEGAFILE=VEGAFILE2
           ELSEIF(COPC.EQ.'3')THEN
-            OPEN(10,FILE=VEGAFILE3,STATUS='OLD',FORM='FORMATTED')
+            OPEN(10,FILE=
+     +       PHOTODIR(L1:L2)//'/'//
+     +       VEGAFILE3,STATUS='OLD',FORM='FORMATTED')
             VEGAFILE=VEGAFILE3
           ELSEIF(COPC.EQ.'4')THEN
-            OPEN(10,FILE=VEGAFILE4,STATUS='OLD',FORM='FORMATTED')
+            OPEN(10,FILE=
+     +       PHOTODIR(L1:L2)//'/'//
+     +       VEGAFILE4,STATUS='OLD',FORM='FORMATTED')
             VEGAFILE=VEGAFILE4
           END IF
           I=1
