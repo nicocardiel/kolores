@@ -16,7 +16,7 @@ AC_PROG_F77
 AC_CONFIG_SRCDIR([src/kolores.f])
 
 # Checks for libraries
-AC_CHECK_LIB([cfitsio], main,,AC_MSG_ERROR(cfitsio library not found))
+PKG_CHECK_MODULES([CFITSIO], [cfitsio])
 STTL_LIB_PGPLOT
 LIBS="$LIBS $PGPLOT_LIBS"
 
