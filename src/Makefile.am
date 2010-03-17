@@ -58,3 +58,6 @@ sescrfits.f \
 sleeascii.f \
 sleefits.f \
 systemfunction.f
+
+kolores_LDADD = $(CFITSIO_LIBS)
+AM_CPPFLAGS = -I$(top_srcdir) $(CFITSIO_CFLAGS) 
