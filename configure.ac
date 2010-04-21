@@ -5,15 +5,10 @@
 
 # Prelude
 AC_INIT(kolores,02.03,[ncl@astrax.fis.ucm.es])
-AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_SRCDIR([config.h.in])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 
 # Checks for programs
 AC_PROG_F77
-
-# Safety check
-AC_CONFIG_SRCDIR([src/kolores.f])
 
 # Checks for libraries
 PKG_CHECK_MODULES([CFITSIO], [cfitsio])
@@ -42,12 +37,14 @@ NSIMULMAX=${NSIMULMAX="$DEFAULT_NSIMULMAX"}
 AC_ARG_VAR(NSIMULMAX,[Maximum number of numerical simulations])
 
 # Output files
+AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_SRCDIR([src/kolores.f])
 AC_CONFIG_FILES([Makefile
                  src/button.inc
                  src/photometry.inc
                  src/version.inc
                  src/Makefile
-                 m4/Makefile
                  atmosphere/Makefile
                  seds/Makefile
                  res/Makefile])

@@ -3,7 +3,7 @@
 # $Id$
 #
 
-SUBDIRS = atmosphere res seds src m4
+SUBDIRS = atmosphere res seds src
 
 ACLOCAL_AMFLAGS = -I m4
 
