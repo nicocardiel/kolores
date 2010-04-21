@@ -9,6 +9,7 @@ AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 
 # Checks for programs
 AC_PROG_F77
+AC_PROG_RANLIB
 
 # Checks for libraries
 PKG_CHECK_MODULES([CFITSIO], [cfitsio])
