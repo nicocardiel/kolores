@@ -4,17 +4,39 @@
 #
 
 # Prelude
-AC_INIT(kolores,02.03,[ncl@astrax.fis.ucm.es])
+AC_INIT(kolores,2.3.1,[cardiel@fis.ucm.es])
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_SRCDIR([config.h.in])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 
 # Checks for programs
 AC_PROG_F77
 AC_PROG_RANLIB
 
+# Safety check
+AC_CONFIG_SRCDIR([src/kolores.f])
+
+# Define directories to search for libraries
+AC_MSG_CHECKING([uname -s for detecting host operating system])
+OSNAME=`uname -s`
+case "$OSNAME" in
+  Darwin*)
+    AC_MSG_RESULT(Darwin)
+    LDFLAGS="$LDFLAGS -L/opt/local/lib"
+  ;;
+  Linux*)
+    AC_MSG_RESULT(Linux)
+    LDFLAGS="$LDFLAGS -L/usr/local/pgplot"
+  ;;
+esac
+
 # Checks for libraries
-PKG_CHECK_MODULES([CFITSIO], [cfitsio])
-STTL_LIB_PGPLOT
-LIBS="$LIBS $PGPLOT_LIBS"
+AC_MSG_RESULT(LDFLAGS set to... $LDFLAGS)
+AC_CHECK_LIB([X11], main,,AC_MSG_ERROR(X11 library not found))
+AC_CHECK_LIB([pgplot], main,,AC_MSG_ERROR(pgplot library not found))
+AC_CHECK_LIB([cfitsio], main,,AC_MSG_ERROR(cfitsio library not found))
+# Define in LIBS all the previous libraries
+LIBS="$LIBS"
 
 # Definitions
 DEFAULT_AUXDIR="/usr/local/share/kolores"
@@ -38,9 +60,6 @@ NSIMULMAX=${NSIMULMAX="$DEFAULT_NSIMULMAX"}
 AC_ARG_VAR(NSIMULMAX,[Maximum number of numerical simulations])
 
 # Output files
-AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_SRCDIR([src/kolores.f])
 AC_CONFIG_FILES([Makefile
                  src/button.inc
                  src/photometry.inc
