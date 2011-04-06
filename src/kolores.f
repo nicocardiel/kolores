@@ -140,7 +140,7 @@ C------------------------------------------------------------------------------
 C welcome message
         WRITE(*,101) '************************************************'
         WRITE(*,101) '       Welcome to kolores '//
-     +   '(version '//VERSION//')'
+     +   '(version '//VERSION(1:TRUELEN(VERSION))//')'
         WRITE(*,101) '------------------------------------------------'
         WRITE(*,101) '           For more information see:            '
         WRITE(*,101) '    http://guaix.fis.ucm.es/projects/kolores    '
