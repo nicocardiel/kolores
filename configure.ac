@@ -26,7 +26,7 @@ case "$OSNAME" in
   ;;
   Linux*)
     AC_MSG_RESULT(Linux)
-    LDFLAGS="$LDFLAGS -L/usr/local/pgplot"
+    LDFLAGS="$LDFLAGS -L/usr/local/pgplot -L/usr/local/src/cfitsio"
   ;;
 esac
 
