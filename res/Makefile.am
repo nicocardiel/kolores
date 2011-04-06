@@ -1,5 +1,4 @@
 #
-# $Id$
 
 resbruzualdir  = $(AUXDIR)/res/bruzual_res
 resfukugitadir = $(AUXDIR)/res/fukugita_res

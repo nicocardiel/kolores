@@ -1,5 +1,4 @@
 #
-# $Id$
 
 atmospheredir  = $(AUXDIR)/atmosphere
 

@@ -1,5 +1,4 @@
 #
-# $Id$
 
 sedscwwdir   = $(AUXDIR)/seds/CWW_sed
 sedsvegadir  = $(AUXDIR)/seds/vega_sed
