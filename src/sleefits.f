@@ -43,6 +43,7 @@ C variables locales
         INTEGER NKEYS,NSPACE,NFOUND
         INTEGER NAXIS_(0:2)                                !OJO: el limite es 2
         REAL FROW(NXMAX)
+        DOUBLE PRECISION DROW(NXMAX)
         CHARACTER*50 COMMENT
         CHARACTER*80 CLINEA
         LOGICAL LOGFILE,LANYNULL
@@ -157,6 +158,21 @@ C leemos la imagen
      +       ANYNULL,ISTATUS)
             DO J=1,NAXIS_(1)
               IMAGEN_(J,I)=FROW(J)
+            END DO
+            IF(ANYNULL)THEN
+              DO J=1,NAXIS_(1)
+                LNULL(J,I)=LROW(J)
+              END DO
+              LANYNULL=.TRUE.
+            END IF
+          END DO
+        ELSEIF(BITPIX.EQ.-64)THEN
+          DO I=1,NAXIS_(2)
+            FIRSTPIX=(I-1)*NAXIS_(1)+1
+            CALL FTGPFD(IUNIT,1,FIRSTPIX,NAXIS_(1),DROW(1),LROW(1),
+     +       ANYNULL,ISTATUS)
+            DO J=1,NAXIS_(1)
+              IMAGEN_(J,I)=REAL(DROW(J))
             END DO
             IF(ANYNULL)THEN
               DO J=1,NAXIS_(1)
