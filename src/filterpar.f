@@ -234,7 +234,7 @@ C------------------------------------------------------------------------------
             IVEGA=NPVEGA/2 !como arranque en la busqueda tomamos el centro
             CALL BINSEARCH(WL_VEGA,NPVEGA,X1,IVEGA) !buscamos X1 en WL_VEGA
             ISPEC=NPSPEC/2 !como arranque en la busqueda tomamos el centro
-            CALL BINSEARCH(WL_SPEC,NPSPEC,X1,ISPEC) !buscamos X1 en WL_VEGA
+            CALL BINSEARCH(WL_SPEC,NPSPEC,X1,ISPEC) !buscamos X1 en WL_SPEC
           END IF
           IF((WL_FILT(IFILT+1).LT.WL_VEGA(IVEGA+1)).AND.
      +     (WL_FILT(IFILT+1).LT.WL_SPEC(ISPEC+1)))THEN

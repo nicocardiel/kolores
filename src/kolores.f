@@ -143,7 +143,7 @@ C welcome message
      +   '(version '//VERSION(1:TRUELEN(VERSION))//')'
         WRITE(*,101) '------------------------------------------------'
         WRITE(*,101) '           For more information see:            '
-        WRITE(*,101) '    http://guaix.fis.ucm.es/projects/kolores    '
+        WRITE(*,101) '      https://guaix.fis.ucm.es/hg/kolores       '
         WRITE(*,101) '************************************************'
         WRITE(*,*)
 C------------------------------------------------------------------------------
