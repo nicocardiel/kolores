@@ -9,7 +9,6 @@ AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 
 # Checks for programs
 AC_PROG_F77
-AC_PROG_RANLIB
 
 # Safety check
 AC_CONFIG_SRCDIR([src/kolores.f])
@@ -24,7 +23,7 @@ case "$OSNAME" in
   ;;
   Linux*)
     AC_MSG_RESULT(Linux)
-    LDFLAGS="$LDFLAGS -L/usr/local/pgplot -L/usr/local/src/cfitsio"
+    LDFLAGS="$LDFLAGS -L/usr/local/pgplot"
   ;;
 esac
 
@@ -32,7 +31,7 @@ esac
 AC_MSG_RESULT(LDFLAGS set to... $LDFLAGS)
 AC_CHECK_LIB([X11], main,,AC_MSG_ERROR(X11 library not found))
 AC_CHECK_LIB([pgplot], main,,AC_MSG_ERROR(pgplot library not found))
-AC_CHECK_LIB([cfitsio], main,,AC_MSG_ERROR(cfitsio library not found))
+PKG_CHECK_MODULES([CFITSIO], [cfitsio])
 # Define in LIBS all the previous libraries
 LIBS="$LIBS"
 
