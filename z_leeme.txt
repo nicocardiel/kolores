@@ -1,4 +1,0 @@
-Para instalar el programa en el Mac
-
-./configure F77=gfortran-mp-4.4
-make
