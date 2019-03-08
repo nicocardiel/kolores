@@ -1,5 +1,5 @@
 C------------------------------------------------------------------------------
-C Copyright 2008 Nicolas Cardiel
+C Copyright 2008-2019 Nicolas Cardiel
 C
 C This file is part of kolores.
 C 
@@ -40,6 +40,8 @@ C
          PARAMETER (FILTERFILE3='res/bruzual_res/filters_res')
          CHARACTER*80 FILTERFILE4
          PARAMETER (FILTERFILE4='res/other_res/other_res')
+         CHARACTER*80 FILTERFILE5
+         PARAMETER (FILTERFILE5='res/dslr_res/dslr_res')
          CHARACTER*80 VEGAFILE1
          PARAMETER (VEGAFILE1='seds/vega_sed/alpha_lyr_005.sed')
          CHARACTER*80 VEGAFILE2

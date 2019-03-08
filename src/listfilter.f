@@ -42,13 +42,20 @@ C------------------------------------------------------------------------------
         LD2=TRUELEN(PHOTODIR)
         IF(WLMIN.GT.WLMAX) RETURN
 C elegimos tipos de filtro a mostrar
-        CTYPE(1:1)=
-     +   READC('Filter list (1=usual filters, 2=NIRSPEC, 3=HST,'//
-     +   ' 4=Bruzual, others=5)','1','12345')
+        WRITE(*,101)'-----------'
+        WRITE(*,101)'Filter list'
+        WRITE(*,101)'-----------'
+        WRITE(*,101)'1: usual filters'
+        WRITE(*,101)'2: NIRSPEC (Keck Telescope) filters'
+        WRITE(*,101)'3: HST (WPC2) filters'
+        WRITE(*,101)'4: Bruzual filters'
+        WRITE(*,101)'5: other filters'
+        WRITE(*,101)'6: DSLR filters'
+        CTYPE(1:1)=READC('Option','1','123456')
 C------------------------------------------------------------------------------
 C filtros "normales"
         IF((CTYPE.EQ.'1').OR.(CTYPE.EQ.'2').OR.(CTYPE.EQ.'4').
-     +    OR.(CTYPE.EQ.'5'))THEN
+     +    OR.(CTYPE.EQ.'5').OR.(CTYPE.EQ.'6'))THEN
           IF(CTYPE.EQ.'1')THEN
             OPEN(10,FILE=
      +       PHOTODIR(LD1:LD2)//'/'//
@@ -69,6 +76,11 @@ C filtros "normales"
      +       PHOTODIR(LD1:LD2)//'/'//
      +       FILTERFILE4,STATUS='OLD',FORM='FORMATTED')
             K=500
+          ELSEIF(CTYPE.EQ.'6')THEN
+            OPEN(10,FILE=
+     +       PHOTODIR(LD1:LD2)//'/'//
+     +       FILTERFILE5,STATUS='OLD',FORM='FORMATTED')
+            K=700
           END IF
 10        READ(10,'(4X,I5,A)',END=20) NPFILT,FILTERNAME
           L1=TRUEBEG(FILTERNAME)
@@ -86,7 +98,7 @@ C filtros "normales"
             RETURN
           END IF
           K=K+1
-          IF(CTYPE.EQ.'5')THEN
+          IF((CTYPE.EQ.'5').OR.(CTYPE.EQ.'6'))THEN
             DO I=1,NPFILT
               READ(10,*) WL_FILT(I),FLUX_FILT(I)
             END DO
@@ -104,7 +116,7 @@ C------------------------------------------------------------------------------
 C filtros HST
         ELSEIF(CTYPE.EQ.'3')THEN
           WRITE(*,*)
-          WRITE(*,101) '0 = trhougput for each filter in isolation'
+          WRITE(*,101) '0 = throughput for each filter in isolation'
           WRITE(*,*)
           WRITE(*,101) '-----------------'
           WRITE(*,101) '|       |       |'

@@ -1,3 +1,4 @@
+#!/bin/bash
 \rm -f other_res
 cat kpno_U.dat \
     kpno_B.dat \

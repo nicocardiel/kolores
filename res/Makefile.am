@@ -4,12 +4,14 @@ resbruzualdir  = $(AUXDIR)/res/bruzual_res
 resfukugitadir = $(AUXDIR)/res/fukugita_res
 resnirspecdir  = $(AUXDIR)/res/nirspec_res
 resotherdir    = $(AUXDIR)/res/other_res
+resdslrdir     = $(AUXDIR)/res/dslr_res
 reshstdir      = $(AUXDIR)/res/HST_res
 
 ALLRES_BRUZUAL  = bruzual_res/filters_res
 ALLRES_FUKUGITA = fukugita_res/fukugita_res
 ALLRES_NIRSPEC  = nirspec_res/nirspec_res
 ALLRES_OTHER    = other_res/other_res
+ALLRES_DSLR     = dslr_res/dslr_res
 ALLRES_HST      = HST_res/pcf1042msys.txt \
                   HST_res/pcf122msys.txt \
                   HST_res/pcf160bwsys.txt \
@@ -238,4 +240,5 @@ dist_resbruzual_DATA = $(ALLRES_BRUZUAL)
 dist_resfukugita_DATA = $(ALLRES_FUKUGITA)
 dist_resnirspec_DATA = $(ALLRES_NIRSPEC)
 dist_resother_DATA = $(ALLRES_OTHER)
+dist_resdslr_DATA = $(ALLRES_DSLR)
 dist_reshst_DATA = $(ALLRES_HST)

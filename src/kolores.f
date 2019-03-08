@@ -717,7 +717,7 @@ C..............................................................................
             END IF
             NFILTER_=-1
             DO WHILE(NFILTER_.EQ.-1)
-              NFILTER_=READI('Filter number (0=none,-1=list)',CDUMMY)
+              NFILTER_=READI('Filter number (0=none, -1=list)',CDUMMY)
               IF(NFILTER_.EQ.-1) CALL LISTFILTER(XMINV,XMAXV)
             END DO
             NF=NB-6

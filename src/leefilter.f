@@ -54,11 +54,16 @@ C filtros "normales"
      +       PHOTODIR(LD1:LD2)//'/'//
      +       FILTERFILE3,STATUS='OLD',FORM='FORMATTED')
             K=100
-          ELSEIF(NFILTER.LE.900)THEN
+          ELSEIF(NFILTER.LE.700)THEN
             OPEN(10,FILE=
      +       PHOTODIR(LD1:LD2)//'/'//
      +       FILTERFILE4,STATUS='OLD',FORM='FORMATTED')
             K=500
+          ELSEIF(NFILTER.LE.900)THEN
+            OPEN(10,FILE=
+     +       PHOTODIR(LD1:LD2)//'/'//
+     +       FILTERFILE5,STATUS='OLD',FORM='FORMATTED')
+            K=700
           ELSE
             OPEN(10,FILE=
      +       PHOTODIR(LD1:LD2)//'/'//

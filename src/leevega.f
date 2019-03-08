@@ -34,7 +34,7 @@ C
         INTEGER I
         INTEGER L1,L2
         INTEGER IFLAG,N1,N2
-        REAL F0
+        REAL F0, FVEGA_AT_5556
         CHARACTER*1 COPC
         CHARACTER*80 VEGAFILE
 C
@@ -105,8 +105,11 @@ C
           NPVEGA=I-1
 C normalizamos el flujo en 5556 A usando el zeropoint de Hayes 1985:
 C F_lambda= 3.44 E-9 erg cm^-2 s^-1 A^-1
-          F0=3.44E-9/LININTERP(NPVEGA,WL_VEGA,FLUX_VEGA,5556.,
+          FVEGA_AT_5556=LININTERP(NPVEGA,WL_VEGA,FLUX_VEGA,5556.,
      +     IFLAG,N1,N2)
+          F0=3.44E-9/FVEGA_AT_5556
+          WRITE(*,100) 'Flux of Vega at 5556 Angs....: '
+          WRITE(*,*) FVEGA_AT_5556
           WRITE(*,100) 'Normalization factor for Vega: '
           WRITE(*,*) F0
           DO I=1,NPVEGA
