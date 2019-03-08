@@ -2,7 +2,7 @@
 #
 
 # Prelude
-AC_INIT(kolores,2.3.1,[cardiel@fis.ucm.es])
+AC_INIT(kolores,2.3.2,[cardiel@fis.ucm.es])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([config.h.in])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
