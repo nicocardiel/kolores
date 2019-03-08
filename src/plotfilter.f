@@ -54,7 +54,7 @@ C------------------------------------------------------------------------------
         IF(.NOT.LANY) RETURN
 C------------------------------------------------------------------------------
         CALL PGQWIN(XW1,XW2,YW1,YW2)
-C dibujamos todos los filtros normalizados a la misma escala
+C dibujamos todos los filtros seleccionados (en la misma escala)
         DO NF=1,NFILTROS
           YMIN(NF)=0
           YMAX(NF)=0
@@ -62,12 +62,22 @@ C dibujamos todos los filtros normalizados a la misma escala
      +     CALL FINDMML(NPFILT(NF),1,NPFILT(NF),FLUX_FILT(1,NF),
      +     YMIN(NF),YMAX(NF))
         END DO
+C
+        YMIN_=0
+        YMAX_=0
         DO NF=1,NFILTROS
           IF(NPFILT(NF).GT.0)THEN
-            DY=YMAX(NF)-YMIN(NF)
-            YMIN_=YMIN(NF)-DY/20.
-            YMAX_=YMAX(NF)+DY/10.
-            CALL PGSWIN(XW1,XW2,YMIN_,YMAX_)
+            IF(YMIN(NF).LT.YMIN_) YMIN_=YMIN(NF)
+            IF(YMAX(NF).GT.YMAX_) YMAX_=YMAX(NF)
+          END IF
+        END DO
+        DY=YMAX_-YMIN_
+        YMIN_=YMIN_-DY/20.
+        YMAX_=YMAX_+DY/10.
+        CALL PGSWIN(XW1,XW2,YMIN_,YMAX_)
+C
+        DO NF=1,NFILTROS
+          IF(NPFILT(NF).GT.0)THEN
             CALL PGSCI(NCOLOR(NF))
             CALL PGLINE(NPFILT(NF),WL_FILT(1,NF),FLUX_FILT(1,NF))
             L1=TRUEBEG(FILTERNAME(NF))

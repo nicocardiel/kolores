@@ -1,5 +1,5 @@
 C------------------------------------------------------------------------------
-C Copyright 2008 Nicolas Cardiel
+C Copyright 2008-2019 Nicolas Cardiel
 C
 C This file is part of kolores.
 C 
@@ -32,12 +32,14 @@ C
 C
         INTEGER TRUEBEG,TRUELEN
         INTEGER SYSTEMFUNCTION
+        CHARACTER*255 READC
 C
         INTEGER I,K,L1,L2
         INTEGER LD1,LD2
         INTEGER IDUM
         INTEGER ISYSTEM
         REAL FMAX
+        CHARACTER*1 CNOR
         CHARACTER*4 CDUMMY
 C------------------------------------------------------------------------------
         LD1=TRUEBEG(PHOTODIR)
@@ -172,13 +174,16 @@ C filtros HST
         END IF
 C------------------------------------------------------------------------------
 C normalizamos la respuesta del filtro al valor en el maximo
-90      FMAX=FLUX_FILT(1)
-        DO I=2,NPFILT
-          FMAX=AMAX1(FMAX,FLUX_FILT(I))
-        END DO
-        DO I=1,NPFILT
-          FLUX_FILT(I)=FLUX_FILT(I)/FMAX
-        END DO
+90      CNOR=READC('Normalize filter response (y/n)','n','yn')
+        IF(CNOR.EQ.'y')THEN
+          FMAX=FLUX_FILT(1)
+          DO I=2,NPFILT
+            FMAX=AMAX1(FMAX,FLUX_FILT(I))
+          END DO
+          DO I=1,NPFILT
+            FLUX_FILT(I)=FLUX_FILT(I)/FMAX
+          END DO
+        END IF
 C------------------------------------------------------------------------------
 100     FORMAT(A,$)
 101     FORMAT(A)
