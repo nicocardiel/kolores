@@ -1,5 +1,5 @@
 C------------------------------------------------------------------------------
-C Copyright 2008 Nicolas Cardiel
+C Copyright 2008-2019 Nicolas Cardiel
 C
 C This file is part of kolores.
 C 
@@ -115,6 +115,7 @@ C variables
         CHARACTER*80 FILTERNAME_,FILTERNAME(NFILTROS)
         CHARACTER*80 INFILE,ERRFILE,OUTFILE
         CHARACTER*80 CLABEL_INFILE
+        LOGICAL LECHO
         LOGICAL LEXIT
         LOGICAL LBEXIST
         LOGICAL LPVEGA,LPFILTER,LPSPECT,LPATM,LPABST0
@@ -136,6 +137,9 @@ C
         COMMON/BLKATM2/WL_ATM,FLUX_ATM
         COMMON/BLKGRAPHIC/NTERM,IDN
         COMMON/BLKSNRAT/SNRAT,SNRATMIN,SNRATMAX
+        COMMON/BLKLECHO/LECHO
+C------------------------------------------------------------------------------
+        INQUIRE(FILE='.running_python',EXIST=LECHO)
 C------------------------------------------------------------------------------
 C welcome message
         WRITE(*,101) '************************************************'
@@ -1644,7 +1648,7 @@ c
      +                   COLOR(NF_),COLOR_RMS(NF_)
         !la siguiente línea genera un fichero fort.8? para cada color,
         !conteniendo la SN en los espectros, el color y el error
-        write(80+nf_,*)imagen_snrat(i),color(nf_),color_rms(nf_)
+        !write(80+nf_,*)imagen_snrat(i),color(nf_),color_rms(nf_)
                         NF_=NF
                       END IF
                     END IF

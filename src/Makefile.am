@@ -24,6 +24,7 @@ buttspr.f \
 buttsxb.f \
 buttsyb.f \
 buttsytext.f \
+chupper.f \
 expand.f \
 filterpar.f \
 findmml.f \
@@ -31,7 +32,6 @@ fit_sed.f \
 fmean0.f \
 guessef.f \
 ifbutton.f \
-iofunctions.f \
 kolores.f \
 leeatm.f \
 leefilter.f \
@@ -44,6 +44,12 @@ plotspectrum2.f \
 plotspectrum.f \
 plotvega.f \
 ranred.f \
+read2i.f \
+readc.f \
+readf.f \
+readi.f \
+readilim.f \
+rmblank.f \
 rpgband.f \
 rpgbegin.f \
 rpgbegok.f \
@@ -56,6 +62,8 @@ scompext.f \
 sescrfits.f \
 sleeascii.f \
 sleefits.f \
-systemfunction.f
+systemfunction.f \
+truebeg.f \
+truelen.f
 
 kolores_LDADD = $(CFITSIO_LIBS) $(PGPLOT_LDFLAGS)
