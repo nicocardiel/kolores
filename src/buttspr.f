@@ -1,5 +1,5 @@
 C------------------------------------------------------------------------------
-C Copyright 2008 Nicolas Cardiel
+C Copyright 2008-2019 Nicolas Cardiel
 C
 C This file is part of kolores.
 C 
