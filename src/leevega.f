@@ -35,10 +35,11 @@ C
         INTEGER L1,L2
         INTEGER IFLAG,N1,N2
         REAL F0, FVEGA_AT_5556
-        CHARACTER*1 COPC
+        CHARACTER*1 CMAGSYSTEM
         CHARACTER*80 VEGAFILE
 C
         COMMON/BLKVEGAFILE/VEGAFILE
+        COMMON/BLKCMAGSYSTEM/CMAGSYSTEM
 C------------------------------------------------------------------------------
         WRITE(*,101) '(1) '//VEGAFILE1(1:TRUELEN(VEGAFILE1))
         WRITE(*,101) '(2) '//VEGAFILE2(1:TRUELEN(VEGAFILE2))
@@ -46,9 +47,10 @@ C------------------------------------------------------------------------------
         WRITE(*,101) '(4) '//VEGAFILE4(1:TRUELEN(VEGAFILE4))
         WRITE(*,101) '(a) AB_nu = -2.5 log F_nu -48.60'
         WRITE(*,101) '(z) ST_lambda = -2.5 log F_lambda -21.10'
-        COPC(1:1)=READC('Option (1/2/3/4/a/z)','2','1234az')
+        CMAGSYSTEM(1:1)=READC('Reference spectrum (1/2/3/4/a/z)',
+     +   '2','1234az')
 C
-        IF(COPC.EQ.'a')THEN
+        IF(CMAGSYSTEM.EQ.'a')THEN
           NPVEGA=NPMAX
           DO I=1,NPMAX
             WL_VEGA(I)=1000.0+REAL(I-1)/REAL(NPMAX-1)*(30000.0-1000.0)
@@ -56,7 +58,7 @@ C
             EFLUX_VEGA(I)=0.
           END DO
           CLABVEGA='AB\d\gn\u'
-        ELSEIF(COPC.EQ.'z')THEN
+        ELSEIF(CMAGSYSTEM.EQ.'z')THEN
           NPVEGA=NPMAX
           DO I=1,NPMAX
             WL_VEGA(I)=1000.0+REAL(I-1)/REAL(NPMAX-1)*(30000.0-1000.0)
@@ -68,34 +70,34 @@ C
           CLABVEGA='\ga Lyr'
           L1=TRUEBEG(PHOTODIR)
           L2=TRUELEN(PHOTODIR)
-          IF(COPC.EQ.'1')THEN
+          IF(CMAGSYSTEM.EQ.'1')THEN
             OPEN(10,FILE=
      +       PHOTODIR(L1:L2)//'/'//
      +       VEGAFILE1,STATUS='OLD',FORM='FORMATTED')
             VEGAFILE=VEGAFILE1
-          ELSEIF(COPC.EQ.'2')THEN
+          ELSEIF(CMAGSYSTEM.EQ.'2')THEN
             OPEN(10,FILE=
      +       PHOTODIR(L1:L2)//'/'//
      +       VEGAFILE2,STATUS='OLD',FORM='FORMATTED')
             VEGAFILE=VEGAFILE2
-          ELSEIF(COPC.EQ.'3')THEN
+          ELSEIF(CMAGSYSTEM.EQ.'3')THEN
             OPEN(10,FILE=
      +       PHOTODIR(L1:L2)//'/'//
      +       VEGAFILE3,STATUS='OLD',FORM='FORMATTED')
             VEGAFILE=VEGAFILE3
-          ELSEIF(COPC.EQ.'4')THEN
+          ELSEIF(CMAGSYSTEM.EQ.'4')THEN
             OPEN(10,FILE=
      +       PHOTODIR(L1:L2)//'/'//
      +       VEGAFILE4,STATUS='OLD',FORM='FORMATTED')
             VEGAFILE=VEGAFILE4
           END IF
           I=1
-10        IF(COPC.EQ.'1')THEN
+10        IF(CMAGSYSTEM.EQ.'1')THEN
             READ(10,*,END=20) WL_VEGA(I),FLUX_VEGA(I),EFLUX_VEGA(I)
           ELSE
             READ(10,*,END=20) WL_VEGA(I),FLUX_VEGA(I)
             EFLUX_VEGA(I)=0.
-            IF(COPC.EQ.'3')THEN
+            IF(CMAGSYSTEM.EQ.'3')THEN
               FLUX_VEGA(I)=10.0**(-0.4*FLUX_VEGA(I))
             END IF
           END IF

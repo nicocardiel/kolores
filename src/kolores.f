@@ -109,6 +109,7 @@ C variables
         CHARACTER*1 CMODEL_SED
         CHARACTER*1 CQUIT
         CHARACTER*1 COPC_EXT
+        CHARACTER*1 CMAGSYSTEM
         CHARACTER*(NBUTT_TOTAL) CLINBUT
         CHARACTER*20 CLABVEGA !etiqueta con nombre de standard de flujo
         CHARACTER*50 CDUMMY,CBUTTON
@@ -137,6 +138,7 @@ C
         COMMON/BLKATM2/WL_ATM,FLUX_ATM
         COMMON/BLKGRAPHIC/NTERM,IDN
         COMMON/BLKSNRAT/SNRAT,SNRATMIN,SNRATMAX
+        COMMON/BLKCMAGSYSTEM/CMAGSYSTEM
         COMMON/BLKLECHO/LECHO
 C------------------------------------------------------------------------------
         INQUIRE(FILE='.running_python',EXIST=LECHO)
@@ -1290,33 +1292,74 @@ C medidas sobre el/los espectros
             END IF
             CPLOT(1:1)=READC('Plots (y/n)',CPLOT,'yn')
             WRITE(*,*)
-            WRITE(*,101) '#NOTE: magnitudes are computed as in'//
+            WRITE(*,100) '# Magnitude_System: '
+            IF(CMAGSYSTEM.EQ.'1')THEN
+              WRITE(*,101) '(1) '//VEGAFILE1(1:TRUELEN(VEGAFILE1))
+            ELSEIF(CMAGSYSTEM.EQ.'2')THEN
+              WRITE(*,101) '(2) '//VEGAFILE2(1:TRUELEN(VEGAFILE2))
+            ELSEIF(CMAGSYSTEM.EQ.'3')THEN
+              WRITE(*,101) '(3) '//VEGAFILE2(1:TRUELEN(VEGAFILE3))
+            ELSEIF(CMAGSYSTEM.EQ.'4')THEN
+              WRITE(*,101) '(4) '//VEGAFILE2(1:TRUELEN(VEGAFILE4))
+            ELSEIF(CMAGSYSTEM.EQ.'a')THEN
+              WRITE(*,101) '(a) AB_nu = -2.5 log F_nu -48.60'
+            ELSEIF(CMAGSYSTEM.EQ.'z')THEN
+              WRITE(*,101) '(z) ST_lambda = -2.5 log F_lambda -21.10'
+            ELSE
+              WRITE(*,100) 'FATAL ERROR: unexpected CMAGSYSTEM='
+              WRITE(*,101) CMAGSYSTEM
+              STOP
+            END IF
+            WRITE(*,101) '# Note: magnitudes are computed as in'//
      +       ' Fukugita et al. 1995, Eq. (1)'
-            WRITE(*,101) '#(01) Spectrum number'
-            WRITE(*,101) '#(02) Redshift'
-            WRITE(*,101) '#(03) E(B-V)'
+            WRITE(*,101) '#'
+            WRITE(*,101) '# Column description:'
+            WRITE(*,101) '# (01) Spectrum number'
+            WRITE(*,101) '# (02) Redshift'
+            WRITE(*,101) '# (03) E(B-V)'
             IF(COUT.EQ.'y')THEN
-              WRITE(30,101) '#NOTE: magnitudes are computed as in'//
+              WRITE(30,100) '# Magnitude_System: '
+              IF(CMAGSYSTEM.EQ.'1')THEN
+                WRITE(30,101) '(1) '//VEGAFILE1(1:TRUELEN(VEGAFILE1))
+              ELSEIF(CMAGSYSTEM.EQ.'2')THEN
+                WRITE(30,101) '(2) '//VEGAFILE2(1:TRUELEN(VEGAFILE2))
+              ELSEIF(CMAGSYSTEM.EQ.'3')THEN
+                WRITE(30,101) '(3) '//VEGAFILE2(1:TRUELEN(VEGAFILE3))
+              ELSEIF(CMAGSYSTEM.EQ.'4')THEN
+                WRITE(30,101) '(4) '//VEGAFILE2(1:TRUELEN(VEGAFILE4))
+              ELSEIF(CMAGSYSTEM.EQ.'a')THEN
+                WRITE(30,101) '(a) AB_nu = -2.5 log F_nu -48.60'
+              ELSEIF(CMAGSYSTEM.EQ.'z')THEN
+                WRITE(30,101) '(z) ST_lambda = -2.5 log F_lambda -21.10'
+              ELSE
+                WRITE(30,100) 'FATAL ERROR: unexpected CMAGSYSTEM='
+                WRITE(30,101) CMAGSYSTEM
+                STOP
+              END IF
+              WRITE(30,101) '# Note: magnitudes are computed as in'//
      +         ' Fukugita et al. 1995, Eq. (1)'
-              WRITE(30,101) '#(01) Spectrum number'
-              WRITE(30,101) '#(02) Redshift'
-              WRITE(30,101) '#(03) E(B-V)'
+              WRITE(30,101) '#'
+              WRITE(30,101) '# Column description:'
+              WRITE(30,101) '# (01) Spectrum number'
+              WRITE(30,101) '# (02) Redshift'
+              WRITE(30,101) '# (03) E(B-V)'
             END IF
             K=3
             DO NF=1,NFILTROS
               CALL BUTTQEX(NF+6,LBEXIST)
               IF((NPFILT(NF).GT.0).AND.LBEXIST)THEN
                 K=K+1
-                WRITE(*,'(A2,I2.2,A)') '#(',K,') Filter: '//
+                WRITE(*,'(A3,I2.2,A)') '# (',K,') Filter: '//
      +           FILTERNAME(NF)(1:TRUELEN(FILTERNAME(NF)))
                 IF(COUT.EQ.'y')THEN
-                  WRITE(30,'(A2,I2.2,A)') '#(',K,') Filter: '//
+                  WRITE(30,'(A3,I2.2,A)') '# (',K,') Filter: '//
      +             FILTERNAME(NF)(1:TRUELEN(FILTERNAME(NF)))
                 END IF
                 K=K+1
-                WRITE(*,'(A2,I2.2,A11,I2.2)')'#(',K,') error of ',K-1
+                WRITE(*,'(A3,I2.2,A11,I2.2)')'# (',K,') error of ',K-1
                 IF(COUT.EQ.'y')THEN
-                  WRITE(30,'(A2,I2.2,A11,I2.2)')'#(',K,') error of ',K-1
+                  WRITE(30,'(A3,I2.2,A11,I2.2)')'# (',K,') error of ',
+     +             K-1
                 END IF
               END IF
             END DO
@@ -1330,18 +1373,19 @@ C medidas sobre el/los espectros
               ELSE
                 IF((NPFILT(NF).GT.0).AND.LBEXIST)THEN
                   K=K+1
-                  WRITE(*,'(A2,I2.2,A9,I2.2,A1,I2.2)') '#(',K,
+                  WRITE(*,'(A3,I2.2,A9,I2.2,A1,I2.2)') '# (',K,
      +             ') Color: ',2*K_+2,'-',2*K_+4
                   IF(COUT.EQ.'y')THEN
-                    WRITE(30,'(A2,I2.2,A9,I2.2,A1,I2.2)') '#(',K,
+                    WRITE(30,'(A3,I2.2,A9,I2.2,A1,I2.2)') '# (',K,
      +               ') Color: ',2*K_+2,'-',2*K_+4
                   END IF
                   K_=K_+1
                   K=K+1
-                  WRITE(*,'(A2,I2.2,A11,I2.2)') '#(',K,') error of ',K-1
+                  WRITE(*,'(A3,I2.2,A11,I2.2)') '# (',K,') error of ',
+     +             K-1
                   IF(COUT.EQ.'y')THEN
-                    WRITE(30,'(A2,I2.2,A11,I2.2)') '#(',K,') error of ',
-     +               K-1
+                    WRITE(30,'(A3,I2.2,A11,I2.2)') '# (',K,') error of '
+     +               ,K-1
                   END IF
                 END IF
               END IF
