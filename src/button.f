@@ -66,6 +66,9 @@ C Variables locales
         REAL X1W,X2W,Y1W,Y2W
         REAL X1V,X2V,Y1V,Y2V
         CHARACTER*80 CWHERE
+        LOGICAL LECHO
+C
+        COMMON/BLKLECHO/LECHO
 C------------------------------------------------------------------------------
 C------------------------------------------------------------------------------
         LMODE=MODE
@@ -208,28 +211,41 @@ C
 C------------------------------------------------------------------------------
 C Botones en modo texto
 90      IF(MODOTEXT_BUTT)THEN
-          WRITE(CWHERE,'(A,I2,A1,I3,A1)')'[',NLIN,';',(NCOL-1)*20,'f'
-          CALL RMBLANK(CWHERE,CWHERE,L)
-          WRITE(*,'(A)')CWHERE(1:L)//'                    '
-          IF(LMODE.EQ.-1)THEN
-          ELSEIF(LMODE.EQ.3)THEN
-            WRITE(*,'(A,I3,A,$)')CWHERE(1:L),N,'-'
-            WRITE(*,101)TEXT(1:TRUELEN(TEXT))
-          ELSEIF(LMODE.EQ.5)THEN
-            WRITE(*,100)'[5m'
-            WRITE(*,'(A,I3,A,$)')CWHERE(1:L),N,'-'
-            WRITE(*,100)TEXT(1:TRUELEN(TEXT))
-            WRITE(*,101)'[0m'
+          IF(LECHO)THEN
+            IF(MODE.EQ.-1)THEN
+            ELSE
+              IF(MODE.EQ.3)THEN
+                WRITE(*,100)'[X] '
+              ELSE
+                WRITE(*,100)'[ ] '
+              END IF
+              WRITE(*,'(I2.2,A3,$)')N,' - '
+              WRITE(*,101)TEXT(1:TRUELEN(TEXT))
+            END IF
           ELSE
-            WRITE(*,100)'[5m'
-            WRITE(*,'(A,I3,A,$)')'[5m'//CWHERE(1:L),N,'[0m'
-            WRITE(*,100)'-'
-            WRITE(*,101)TEXT(1:TRUELEN(TEXT))
+            WRITE(CWHERE,'(A,I2,A1,I3,A1)')'[',NLIN,';',(NCOL-1)*20,'f'
+            CALL RMBLANK(CWHERE,CWHERE,L)
+            WRITE(*,'(A)')CWHERE(1:L)//'                    '
+            IF(LMODE.EQ.-1)THEN
+            ELSEIF(LMODE.EQ.3)THEN
+              WRITE(*,'(A,I3,A,$)')CWHERE(1:L),N,'-'
+              WRITE(*,101)TEXT(1:TRUELEN(TEXT))
+            ELSEIF(LMODE.EQ.5)THEN
+              WRITE(*,100)'[5m'
+              WRITE(*,'(A,I3,A,$)')CWHERE(1:L),N,'-'
+              WRITE(*,100)TEXT(1:TRUELEN(TEXT))
+              WRITE(*,101)'[0m'
+            ELSE
+              WRITE(*,100)'[5m'
+              WRITE(*,'(A,I3,A,$)')'[5m'//CWHERE(1:L),N,'[0m'
+              WRITE(*,100)'-'
+              WRITE(*,101)TEXT(1:TRUELEN(TEXT))
+            END IF
+            WRITE(CWHERE,'(A,I2,A3)')'[',MAX_YBUTT+1,';1f'
+            CALL RMBLANK(CWHERE,CWHERE,L)
+            WRITE(*,'(A)')CWHERE(1:L)//'[J'
+            WRITE(*,'(A)')CWHERE(1:L)
           END IF
-          WRITE(CWHERE,'(A,I2,A3)')'[',MAX_YBUTT+1,';1f'
-          CALL RMBLANK(CWHERE,CWHERE,L)
-          WRITE(*,'(A)')CWHERE(1:L)//'[J'
-          WRITE(*,'(A)')CWHERE(1:L)
         END IF
 C------------------------------------------------------------------------------
 100     FORMAT(A,$)

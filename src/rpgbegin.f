@@ -64,6 +64,9 @@ C local variables
         CHARACTER*1 CBUT
         CHARACTER*255 TERMINAL,DEFDEV
         LOGICAL LOOP
+        LOGICAL LECHO
+C
+        COMMON/BLKLECHO/LECHO
 C------------------------------------------------------------------------------
         CALL GRGENV('DEV',DEFDEV,LDEV)
 C determinamos si los botones se muestran en modo texto
@@ -79,7 +82,7 @@ C determinamos si los botones se muestran en modo texto
      +     READC('Do you want to plot the buttons anyway...(y/n)',
      +     'y','yn')
           MODOTEXT_PLOTBUTT=(CBUT.EQ.'y')
-          WRITE(*,'(A)')'[1;1f[J'
+          IF(.NOT.LECHO) WRITE(*,'(A)')'[1;1f[J'
         ELSE
           MODOTEXT_PLOTBUTT=.FALSE.
         END IF

@@ -53,7 +53,7 @@ C------------------------------------------------------------------------------
         CALL PGLINE(NPSPEC,WL_SPEC,FLUX_SPEC)
         L1=TRUEBEG(SPECNAME)
         L2=TRUELEN(SPECNAME)
-        print*,l1,l2,'>'//specname(l1:l2)//'<'
+!       print*,l1,l2,'>'//specname(l1:l2)//'<'
         CALL PGMTEXT('T',-1.5,0.98,1.0,SPECNAME(L1:L2))
         CALL PGSCI(1)
         CALL PGSWIN(XW1,XW2,YW1,YW2)
